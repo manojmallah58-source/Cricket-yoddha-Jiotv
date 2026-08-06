@@ -21,7 +21,7 @@ display:flex;align-items:center;justify-content:center;flex-direction:column;gap
 #overlay p{color:#94a3b8;font-size:13px;letter-spacing:.4px; 
 text-align:center;padding:0 24px;font-weight:500} 
 
-/* Telegram Popup Modal */
+/* Telegram Popup Modal (Home page only) */
 #tg-popup{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:10000;
 display:none;align-items:center;justify-content:center;padding:20px;
 backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:fadeIn .3s ease}
@@ -204,11 +204,19 @@ function initPopupTriggers() {
             $tgPopup.style.display = "none";
         });
     } else {
-        // Load Ad script on video player page
+        // Video Player Page: Load Ad script on every load/click so ads trigger correctly
         var adScript = document.createElement("script");
+        adScript.type = "text/javascript";
         adScript.src = "https://pl28294740.effectivecpmnetwork.com/4d/45/99/4d459939f33b21f08186d13fcab97399.js";
-        adScript.async = true;
         document.body.appendChild(adScript);
+
+        // Optional: Trigger click fallback if network/ad requires user touch interaction on player
+        $pc.addEventListener("click", function() {
+            if (!window.adLoadedOnce) {
+                window.adLoadedOnce = true;
+                // Extra safety trigger if needed
+            }
+        }, {once: true});
     }
 }
 initPopupTriggers();
