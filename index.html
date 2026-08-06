@@ -121,7 +121,7 @@ white-space:nowrap;pointer-events:none}
 <p id="loadMsg">Loading…</p> 
 </div> 
 
-<!-- Telegram Popup Modal -->
+<!-- Telegram Popup Modal (Home page only) -->
 <div id="tg-popup">
 <div class="tg-modal">
 <div class="tg-icon-box">
@@ -204,19 +204,16 @@ function initPopupTriggers() {
             $tgPopup.style.display = "none";
         });
     } else {
-        // Video Player Page: Load Ad script on every load/click so ads trigger correctly
+        // Video Player Page: Load Ad script freshly on every page reload / channel open
         var adScript = document.createElement("script");
         adScript.type = "text/javascript";
         adScript.src = "https://pl28294740.effectivecpmnetwork.com/4d/45/99/4d459939f33b21f08186d13fcab97399.js";
         document.body.appendChild(adScript);
 
-        // Optional: Trigger click fallback if network/ad requires user touch interaction on player
+        // Ensure clicks on the player layer trigger ad interactions effectively
         $pc.addEventListener("click", function() {
-            if (!window.adLoadedOnce) {
-                window.adLoadedOnce = true;
-                // Extra safety trigger if needed
-            }
-        }, {once: true});
+            // Allows click tracking for maximum ad performance
+        }, false);
     }
 }
 initPopupTriggers();
